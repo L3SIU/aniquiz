@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17191d">
+  <title>AniQuiz — koncerty i serduszka</title>
+  <style>
+    :root{color-scheme:dark;--bg:#17191d;--panel:#22262d;--panel2:#1d2026;--line:#39424e;--text:#f2f4f8;--muted:#a8b4c5;--blue:#438cff;--blue2:#26364c;--red:#ff7582;--green:#62d6a3;--gold:#e8b968}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:var(--text);background:#29303a;border:1px solid var(--line);border-radius:9px;padding:10px 14px}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);border-color:var(--blue);font-weight:700}button.danger{color:var(--red)}input,select,textarea{width:100%;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:11px 12px}textarea{min-height:100px;resize:vertical}label{display:grid;gap:6px;color:var(--muted);font-size:13px}.shell{max-width:1240px;margin:0 auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:12px;background:var(--blue2);border:1px solid #496b98;display:grid;place-items:center;font-weight:800;color:#b9d5ff}.brand h1{font-size:18px;margin:0}.brand p{margin:0;color:var(--muted);font-size:12px;letter-spacing:.11em}.eyebrow{color:#8da7c7;font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}.login{max-width:480px;margin:9vh auto}.login h2{margin:4px 0 8px;font-size:28px}.stack{display:grid;gap:14px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{flex:1}.row>.fit{flex:0 0 auto}.muted{color:var(--muted)}.small{font-size:13px}.notice{border-radius:10px;padding:11px 14px;background:#263448;border:1px solid #3c5b7d;color:#d4e5ff}.notice.error{background:#3b252a;border-color:#75444d;color:#ffc1c6}.notice.good{background:#1f382f;border-color:#32694f;color:#b4f0d3}.hidden{display:none!important}.tabs{display:flex;gap:8px;overflow:auto;border-bottom:1px solid var(--line);margin:20px 0}.tabs button{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--muted);white-space:nowrap}.tabs button.active{color:#fff;border-bottom-color:var(--blue)}.toolbar{display:flex;gap:12px;margin-bottom:16px}.toolbar input{max-width:580px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}.item h3{margin:0 0 4px;font-size:17px}.item p{margin:4px 0}.chip{display:inline-flex;border:1px solid #476080;background:#253141;border-radius:999px;padding:4px 9px;margin:4px 4px 0 0;color:#d9e8ff;font-size:12px}.section{margin-top:22px}.section h2{font-size:20px;margin:0 0 12px}.stats{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:10px;margin:14px 0}.stat{padding:13px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}.stat strong{display:block;font-size:21px}.stat span{color:var(--muted);font-size:12px}.empty{padding:32px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid .wide{grid-column:1/-1}.request{border-top:1px solid var(--line);padding:14px 0}.request:first-child{border-top:0}.request h3{margin:0 0 5px;font-size:15px}.status{float:right;color:var(--gold);font-size:12px}.footer{color:var(--muted);font-size:12px;text-align:center;padding:28px 0 10px}
+    @media(max-width:650px){.shell{padding:14px}.top{align-items:flex-start}.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.toolbar{flex-direction:column}.toolbar input{max-width:none}.card{padding:16px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="top">
+      <div class="brand"><div class="logo">O/E</div><div><h1>AniQuiz</h1><p>BAZA KONCERTÓW I SERDUSZEK</p></div></div>
+      <button id="logout" class="hidden">Wyloguj</button>
+    </header>
+
+    <section id="loginView" class="card login">
+      <div class="eyebrow">Baza społeczności</div><h2>Zaloguj się</h2>
+      <p class="muted">Podgląd koncertów, setlist i serduszek graczy AniQuiz.</p>
+      <form id="loginForm" class="stack">
+        <label>Hasło<input id="password" type="password" autocomplete="current-password" required></label>
+        <button class="primary" type="submit">Zaloguj się</button>
+        <div id="loginMessage" class="small" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <section id="appView" class="hidden">
+      <div class="row"><div><div class="eyebrow">Wspólne dane AniQuiz</div><h2 style="margin:3px 0">Koncerty, utwory i serduszka</h2></div><button id="refresh" class="fit">Odśwież dane</button></div>
+      <div id="message" class="hidden" style="margin:14px 0" aria-live="polite"></div>
+      <div class="stats"><div class="stat"><strong id="countConcerts">0</strong><span>koncertów</span></div><div class="stat"><strong id="countPlayers">0</strong><span>graczy</span></div><div class="stat"><strong id="countTracks">0</strong><span>utworów</span></div></div>
+      <nav class="tabs" aria-label="Sekcje"><button class="active" data-tab="concerts">Koncerty</button><button data-tab="tracks">Utwory i serduszka</button><button data-tab="attendance">Dodaj swoją obecność</button><button data-tab="requests">Zgłoś poprawkę</button><button data-tab="admin" id="adminTab" class="hidden">Panel admina</button></nav>
+
+      <section id="concertsTab" class="tabPanel">
+        <div class="toolbar"><input id="concertSearch" placeholder="Szukaj artysty, miasta, wydarzenia lub gracza…" aria-label="Szukaj koncertów"></div>
+        <div id="concertList" class="grid"></div>
+      </section>
+      <section id="tracksTab" class="tabPanel hidden">
+        <div class="toolbar"><input id="trackSearch" placeholder="Szukaj utworu, wykonawcy lub anime…" aria-label="Szukaj utworów"></div>
+        <div id="trackList" class="grid"></div>
+      </section>
+      <section id="attendanceTab" class="tabPanel hidden">
+        <div class="card"><h2>Dodaj obecność na koncercie</h2><p class="muted">Wybierz swój profil i koncert, a potem potwierdź PIN-em. Utwory z setlisty dostaną bilet koncertowy.</p>
+          <form id="attendanceForm" class="formgrid">
+            <label>Twój profil<select id="attendancePlayer" required></select></label>
+            <label>Koncert<select id="attendanceConcert" required></select></label>
+            <label class="wide">PIN profilu<input id="attendancePin" type="password" inputmode="numeric" autocomplete="off" minlength="6" required></label>
+            <div class="wide"><button class="primary" type="submit">Potwierdź obecność</button></div>
+          </form>
+        </div>
+      </section>
+      <section id="requestsTab" class="tabPanel hidden">
+        <div class="card"><h2>Zgłoś brak lub błąd</h2><p class="muted">Zgłoszenie trafi do administratora do sprawdzenia.</p>
+          <form id="requestForm" class="formgrid">
+            <label>Rodzaj zgłoszenia<select id="requestType"><option value="track_missing">Brak utworu</option><option value="track_correction">Poprawka utworu</option><option value="concert_missing">Brak koncertu</option><option value="concert_correction">Poprawka koncertu</option><option value="setlist_missing">Brak utworu w setliście</option><option value="setlist_correction">Błąd w setliście</option></select></label>
+            <label>Twój nick<input id="requesterName" maxlength="120" placeholder="Nick z bazy AniQuiz"></label>
+            <label class="wide">Temat<input id="requestSubject" maxlength="240" placeholder="Np. Ado — brak koncertu w Brukseli 2025" required></label>
+            <label class="wide">Szczegóły<textarea id="requestDetails" maxlength="5000" placeholder="Podaj poprawne dane lub opisz problem"></textarea></label>
+            <div class="wide"><button class="primary" type="submit">Wyślij zgłoszenie</button></div>
+          </form>
+        </div>
+      </section>
+      <section id="adminTabPanel" class="tabPanel hidden">
+        <div class="grid">
+          <div class="card"><h2>Ustaw PIN gracza</h2><p class="muted">PIN od 6 do 32 znaków. Baza przechowuje wyłącznie jego bezpieczny skrót.</p>
+            <form id="pinForm" class="stack"><label>Gracz<select id="pinPlayer" required></select></label><label>Nowy PIN<input id="newPin" type="password" minlength="6" maxlength="32" required></label><button class="primary" type="submit">Zapisz PIN</button></form>
+          </div>
+          <div class="card"><div class="row"><div><h2>Zgłoszenia</h2><p class="muted">Oczekujące prośby społeczności.</p></div><button id="loadRequests" class="fit">Odśwież</button></div><div id="adminRequests"></div></div>
+        </div>
+      </section>
+    </section>
+    <footer class="footer">AniQuiz Online · Wideo i pliki muzyczne pozostają w aplikacji lokalnej.</footer>
+  </main>
+
+  <script>
+    // Public client configuration. The publishable key is intended for browser use;
+    // never place a Supabase Secret/service-role key in this file.
+    const API_BASE = "https://ywcckuiukerosgtsjwsr.supabase.co/functions/v1/aniquiz-api";
+    const PUBLISHABLE_KEY = "sb_publishable_PCUAZcxHG8eX8R8VlEob3Q_DzAFystB";
+    const $ = (id) => document.getElementById(id);
+    const state = { token: sessionStorage.getItem("aniquiz_token"), role: sessionStorage.getItem("aniquiz_role"), data: null };
+    const esc = (value) => String(value ?? "").replace(/[&<>"']/gu, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+    function message(text, kind="good", target="message") { const el=$(target); el.className=`notice ${kind}`; el.textContent=text; el.classList.remove("hidden"); }
+    async function api(action, payload={}, authenticated=true) {
+      if (PUBLISHABLE_KEY.includes("PASTE_")) throw new Error("Administrator strony musi wkleić klucz Publishable do konfiguracji index.html.");
+      const headers={"Content-Type":"application/json","apikey":PUBLISHABLE_KEY};
+      if(authenticated && state.token) headers.Authorization=`Bearer ${state.token}`;
+      const response=await fetch(API_BASE,{method:"POST",headers,body:JSON.stringify({action,...payload})});
+      let body={}; try{body=await response.json()}catch{}
+      if(!response.ok) throw new Error(body.error || `Błąd API (${response.status})`);
+      return body;
+    }
+    function showApp(){ $("loginView").classList.add("hidden"); $("appView").classList.remove("hidden"); $("logout").classList.remove("hidden"); $("adminTab").classList.toggle("hidden",state.role!=="admin"); }
+    function signOut(){sessionStorage.removeItem("aniquiz_token");sessionStorage.removeItem("aniquiz_role");state.token=null;state.role=null;state.data=null;$("appView").classList.add("hidden");$("logout").classList.add("hidden");$("loginView").classList.remove("hidden");}
+    async function loadSnapshot(){try{state.data=await api("snapshot");render();}catch(e){if(String(e.message).includes("Sesja wygasła"))signOut();message(e.message,"error");}}
+    function render(){const d=state.data;if(!d)return;$("countConcerts").textContent=d.concerts.length;$("countPlayers").textContent=d.players.length;$("countTracks").textContent=d.tracks.length;fillSelects();renderConcerts();renderTracks();}
+    function fillSelects(){const d=state.data;const playerOpts=d.players.map(p=>`<option value="${esc(p.player_id)}">${esc(p.display_name)}</option>`).join("");const concertOpts=d.concerts.map(c=>`<option value="${esc(c.concert_id)}">${esc(c.artist)} · ${esc(c.event_name)} (${esc(c.event_year)})</option>`).join("");$("attendancePlayer").innerHTML=playerOpts||"<option value=''>Brak graczy w bazie</option>";$("pinPlayer").innerHTML=playerOpts||"<option value=''>Brak graczy w bazie</option>";$("attendanceConcert").innerHTML=concertOpts||"<option value=''>Brak koncertów w bazie</option>";}
+    function renderConcerts(){const d=state.data,q=$("concertSearch").value.trim().toLocaleLowerCase("pl");const names=new Map(d.players.map(p=>[String(p.player_id),p.display_name]));const attByConcert=new Map();for(const a of d.attendance){const list=attByConcert.get(a.concert_id)||[];list.push(names.get(String(a.player_id))||String(a.player_id));attByConcert.set(a.concert_id,list);}const songsByConcert=new Map();for(const s of d.setlist){const list=songsByConcert.get(s.concert_id)||[];list.push(s);songsByConcert.set(s.concert_id,list);}const rows=d.concerts.filter(c=>[c.artist,c.event_name,c.city,c.venue,...(attByConcert.get(c.concert_id)||[])].join(" ").toLocaleLowerCase("pl").includes(q));$("concertList").innerHTML=rows.length?rows.map(c=>{const attendees=attByConcert.get(c.concert_id)||[];const songs=songsByConcert.get(c.concert_id)||[];return `<article class="item"><h3>${esc(c.artist)} · ${esc(c.event_name)}</h3><p class="muted">${esc(c.event_year)}${c.city?` · ${esc(c.city)}`:""}${c.venue?` · ${esc(c.venue)}`:""}</p><p><strong>${attendees.length}</strong> ${attendees.length===1?"gracz":"graczy"} · <strong>${songs.length}</strong> utworów</p><div>${attendees.length?attendees.map(n=>`<span class="chip">${esc(n)}</span>`).join(""):`<span class="muted small">Brak potwierdzonych osób</span>`}</div><details class="section"><summary>Setlista</summary><ol>${songs.map(s=>`<li>${esc(s.song_title)} <span class="muted small">· ${esc(s.artist)}${s.anime_title?` · ${esc(s.anime_title)}`:""}</span></li>`).join("")||"<li class='muted'>Brak pozycji</li>"}</ol></details></article>`}).join(""):`<div class="empty">${d.concerts.length?"Nic nie pasuje do wyszukiwania.":"Baza koncertów jest jeszcze pusta. Po synchronizacji pojawią się tu wydarzenia."}</div>`;}
+    function renderTracks(){const d=state.data,q=$("trackSearch").value.trim().toLocaleLowerCase("pl");const players=new Map(d.players.map(p=>[String(p.player_id),p.display_name]));const rows=d.tracks.filter(t=>[t.song_title,t.song_title_en,t.artist,t.anime_title,t.anime_title_pl].join(" ").toLocaleLowerCase("pl").includes(q));$("trackList").innerHTML=rows.length?rows.slice(0,500).map(t=>{const marks=d.marks.filter(m=>m.track_key===t.track_key);const hearts=marks.filter(m=>m.heart).map(m=>players.get(String(m.player_id))).filter(Boolean);const tickets=marks.filter(m=>m.concert).map(m=>players.get(String(m.player_id))).filter(Boolean);return `<article class="item"><h3>${esc(t.song_title_en||t.song_title)}</h3>${t.song_title_en&&t.song_title_en!==t.song_title?`<p class="muted">${esc(t.song_title)}</p>`:""}<p class="muted">${esc(t.artist||"Nieznany wykonawca")}${t.anime_title?` · ${esc(t.anime_title)}`:""}</p>${t.anime_title_pl?`<p class="small">Polski tytuł: ${esc(t.anime_title_pl)}</p>`:""}<p class="small">♥ ${hearts.length?hearts.map(esc).join(", "):"Brak serduszek"}</p><p class="small muted">Bilet koncertowy: ${tickets.length?tickets.map(esc).join(", "):"brak"}</p></article>`}).join(""):`<div class="empty">${d.tracks.length?"Nie znaleziono utworów.":"Baza utworów jest jeszcze pusta."}</div>`;}
+    document.querySelectorAll(".tabs button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".tabPanel").forEach(p=>p.classList.add("hidden"));$(`${btn.dataset.tab}Tab${btn.dataset.tab==="admin"?"Panel":""}`).classList.remove("hidden");if(btn.dataset.tab==="admin")loadAdminRequests();}));
+    $("loginForm").addEventListener("submit",async e=>{e.preventDefault();$("loginMessage").textContent="Logowanie…";try{const r=await api("login",{password:$("password").value},false);state.token=r.token;state.role=r.role;sessionStorage.setItem("aniquiz_token",r.token);sessionStorage.setItem("aniquiz_role",r.role);$("password").value="";showApp();await loadSnapshot();}catch(err){$("loginMessage").textContent=err.message;$("loginMessage").className="notice error";}});
+    $("logout").addEventListener("click",signOut);$("refresh").addEventListener("click",loadSnapshot);$("concertSearch").addEventListener("input",renderConcerts);$("trackSearch").addEventListener("input",renderTracks);
+    $("attendanceForm").addEventListener("submit",async e=>{e.preventDefault();try{const r=await api("add_attendance",{player_id:Number($("attendancePlayer").value),concert_id:$("attendanceConcert").value,pin:$("attendancePin").value});$("attendancePin").value="";message(`Obecność zapisana. Dodano bilety do ${r.tickets_added} utworów.`);await loadSnapshot();}catch(err){message(err.message,"error");}});
+    $("requestForm").addEventListener("submit",async e=>{e.preventDefault();try{await api("request",{request_type:$("requestType").value,requester_name:$("requesterName").value,subject:$("requestSubject").value,details:$("requestDetails").value});$("requestForm").reset();message("Zgłoszenie wysłane do administratora.");}catch(err){message(err.message,"error");}});
+    async function loadAdminRequests(){try{const r=await api("admin_requests",{status:"pending"});$("adminRequests").innerHTML=r.requests.length?r.requests.map(x=>`<div class="request"><span class="status">${esc(x.status)}</span><h3>${esc(x.subject)}</h3><div class="muted small">${esc(x.request_type)} · ${esc(x.requester_name)} · ${new Date(x.created_at).toLocaleString("pl-PL")}</div><p>${esc(x.details)}</p><div class="row"><button data-review="resolved" data-id="${esc(x.request_id)}">Oznacz jako rozwiązane</button><button class="danger" data-review="rejected" data-id="${esc(x.request_id)}">Odrzuć</button></div></div>`).join(""):"<div class='empty'>Brak oczekujących zgłoszeń.</div>";}catch(e){message(e.message,"error");}}
+    $("loadRequests").addEventListener("click",loadAdminRequests);$("adminRequests").addEventListener("click",async e=>{const b=e.target.closest("button[data-review]");if(!b)return;try{await api("review_request",{request_id:b.dataset.id,status:b.dataset.review});await loadAdminRequests();}catch(err){message(err.message,"error");}});
+    $("pinForm").addEventListener("submit",async e=>{e.preventDefault();try{await api("set_player_pin",{player_id:Number($("pinPlayer").value),pin:$("newPin").value});$("newPin").value="";message("PIN gracza zapisany.");}catch(err){message(err.message,"error");}});
+    if(state.token){showApp();loadSnapshot();}
+  </script>
+</body>
+</html>
