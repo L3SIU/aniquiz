@@ -65,6 +65,9 @@
       </section>
       <section id="adminTabPanel" class="tabPanel hidden">
         <div class="grid">
+          <div class="card"><h2>Wczytaj dane z lokalnego quizu</h2><p class="muted">W lokalnej aplikacji otwórz zakładkę Koncerty i oznaczenia, wybierz „Eksportuj bazę online”, a pobrany plik JSON wczytaj tutaj. Import dopisuje i aktualizuje wpisy; nie usuwa danych już obecnych w bazie online.</p>
+            <form id="syncForm" class="stack"><label>Eksport AniQuiz JSON<input id="syncFile" type="file" accept="application/json,.json" required></label><button class="primary" type="submit">Importuj dane do bazy online</button><div id="syncMessage" class="small" aria-live="polite"></div></form>
+          </div>
           <div class="card"><h2>Ustaw PIN gracza</h2><p class="muted">PIN od 6 do 32 znaków. Baza przechowuje wyłącznie jego bezpieczny skrót.</p>
             <form id="pinForm" class="stack"><label>Gracz<select id="pinPlayer" required></select></label><label>Nowy PIN<input id="newPin" type="password" minlength="6" maxlength="32" required></label><button class="primary" type="submit">Zapisz PIN</button></form>
           </div>
@@ -108,6 +111,7 @@
     async function loadAdminRequests(){try{const r=await api("admin_requests",{status:"pending"});$("adminRequests").innerHTML=r.requests.length?r.requests.map(x=>`<div class="request"><span class="status">${esc(x.status)}</span><h3>${esc(x.subject)}</h3><div class="muted small">${esc(x.request_type)} · ${esc(x.requester_name)} · ${new Date(x.created_at).toLocaleString("pl-PL")}</div><p>${esc(x.details)}</p><div class="row"><button data-review="resolved" data-id="${esc(x.request_id)}">Oznacz jako rozwiązane</button><button class="danger" data-review="rejected" data-id="${esc(x.request_id)}">Odrzuć</button></div></div>`).join(""):"<div class='empty'>Brak oczekujących zgłoszeń.</div>";}catch(e){message(e.message,"error");}}
     $("loadRequests").addEventListener("click",loadAdminRequests);$("adminRequests").addEventListener("click",async e=>{const b=e.target.closest("button[data-review]");if(!b)return;try{await api("review_request",{request_id:b.dataset.id,status:b.dataset.review});await loadAdminRequests();}catch(err){message(err.message,"error");}});
     $("pinForm").addEventListener("submit",async e=>{e.preventDefault();try{await api("set_player_pin",{player_id:Number($("pinPlayer").value),pin:$("newPin").value});$("newPin").value="";message("PIN gracza zapisany.");}catch(err){message(err.message,"error");}});
+    $("syncForm").addEventListener("submit",async e=>{e.preventDefault();const file=$("syncFile").files[0];if(!file)return;const status=$("syncMessage");status.className="small";status.textContent="Wczytuję eksport…";try{if(file.size>18_000_000)throw new Error("Plik przekracza limit 18 MB.");const snapshot=JSON.parse(await file.text());const result=await api("sync_snapshot",{snapshot});status.className="notice good";status.textContent=`Import zakończony: ${result.counts.players} graczy, ${result.counts.tracks} utworów, ${result.counts.concerts} koncertów, ${result.counts.setlist} pozycji setlist i ${result.counts.marks} oznaczeń.`;$("syncFile").value="";await loadSnapshot();}catch(err){status.className="notice error";status.textContent=err instanceof SyntaxError?"Plik nie jest poprawnym JSON-em.":err.message;}});
     if(state.token){showApp();loadSnapshot();}
   </script>
 </body>
