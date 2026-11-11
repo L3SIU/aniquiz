@@ -1,129 +1,502 @@
-<!doctype html>
-<html lang="pl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17191d">
-  <title>AniQuiz — koncerty i serduszka</title>
-  <style>
-    :root{color-scheme:dark;--bg:#11151b;--panel:#1c222b;--panel2:#151a21;--line:#34404d;--text:#f2f5fa;--muted:#a8b4c5;--blue:#438cff;--blue2:#26364c;--red:#ff7582;--green:#62d6a3;--gold:#e8b968;--pink:#ff8eae}
-    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -30%,#202b3b 0,transparent 55%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;color:var(--text);background:#29303a;border:1px solid var(--line);border-radius:9px;padding:10px 14px}button:hover{border-color:var(--blue)}button.primary{background:var(--blue);border-color:var(--blue);font-weight:700}button.danger{color:var(--red)}input,select,textarea{width:100%;color:var(--text);background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:11px 12px}textarea{min-height:100px;resize:vertical}label{display:grid;gap:6px;color:var(--muted);font-size:13px}.shell{max-width:1240px;margin:0 auto;padding:24px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}.brand{display:flex;align-items:center;gap:16px}.brandLogo{display:block;width:166px;height:auto;object-fit:contain}.brand p{margin:0;color:var(--muted);font-size:12px;letter-spacing:.11em}.eyebrow{color:#8da7c7;font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:700}.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 12px 34px #0002}.login{max-width:480px;margin:9vh auto}.login h2{margin:4px 0 8px;font-size:28px}.stack{display:grid;gap:14px}.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.row>*{flex:1}.row>.fit{flex:0 0 auto}.muted{color:var(--muted)}.small{font-size:13px}.notice{border-radius:10px;padding:11px 14px;background:#263448;border:1px solid #3c5b7d;color:#d4e5ff}.notice.error{background:#3b252a;border-color:#75444d;color:#ffc1c6}.notice.good{background:#1f382f;border-color:#32694f;color:#b4f0d3}.hidden{display:none!important}.tabs{display:flex;gap:8px;overflow:auto;border-bottom:1px solid var(--line);margin:20px 0}.tabs button{background:transparent;border:0;border-bottom:2px solid transparent;border-radius:0;color:var(--muted);white-space:nowrap}.tabs button.active{color:#fff;border-bottom-color:var(--blue)}.toolbar{display:flex;gap:12px;margin-bottom:16px}.toolbar input{max-width:580px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}.item h3{margin:0 0 4px;font-size:17px}.item p{margin:4px 0}.trackMarks{display:grid;gap:8px;margin-top:14px}.trackMark{display:grid;grid-template-columns:26px minmax(0,1fr);align-items:start;gap:8px;padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);min-width:0}.trackMark .markIcon{display:grid;place-items:center;width:24px;height:22px}.trackMark .markText{min-width:0;overflow-wrap:anywhere}.trackMark strong{display:block;margin-bottom:2px;font-size:12px;color:var(--muted);font-weight:650}.trackMark .markNames{display:block;line-height:1.4}.heartIcon{color:var(--pink);font-size:17px}.ticketIcon{color:#8fc5ff}.ticketIcon svg{display:block;width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.chip{display:inline-flex;border:1px solid #476080;background:#253141;border-radius:999px;padding:4px 9px;margin:4px 4px 0 0;color:#d9e8ff;font-size:12px}.section{margin-top:22px}.section h2{font-size:20px;margin:0 0 12px}.stats{display:grid;grid-template-columns:repeat(3,minmax(110px,1fr));gap:10px;margin:14px 0}.stat{padding:13px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}.stat strong{display:block;font-size:21px}.stat span{color:var(--muted);font-size:12px}.empty{padding:32px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.formgrid .wide{grid-column:1/-1}.request{border-top:1px solid var(--line);padding:14px 0}.request:first-child{border-top:0}.request h3{margin:0 0 5px;font-size:15px}.status{float:right;color:var(--gold);font-size:12px}.footer{color:var(--muted);font-size:12px;text-align:center;padding:28px 0 10px}.pinrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
-    @media(max-width:650px){.shell{padding:14px}.top{align-items:flex-start}.brandLogo{width:132px}.brand{gap:10px}.brand p{font-size:10px}.formgrid{grid-template-columns:1fr}.formgrid .wide{grid-column:auto}.toolbar{flex-direction:column}.toolbar input{max-width:none}.card{padding:16px}}
-  </style>
-</head>
-<body>
-  <main class="shell">
-    <header class="top">
-      <div class="brand"><img class="brandLogo" src="./ani_quiz_logo.png" alt="AniQuiz — Anisong Quiz"><div><p>BAZA KONCERTÓW · UTWORÓW · JANUSZY</p></div></div>
-      <button id="logout" class="hidden">Wyloguj</button>
-    </header>
+// AniQuiz Online API — Supabase Edge Function (starter, metadata portal)
+// Required Edge Function secrets are listed in README.txt.
 
-    <section id="loginView" class="card login">
-      <h2>Zaloguj się</h2>
-      <p class="muted">Podaj hasło dostępu.</p>
-      <form id="loginForm" class="stack">
-        <label>Hasło<input id="password" type="password" autocomplete="current-password" required></label>
-        <button class="primary" type="submit">Zaloguj się</button>
-        <div id="loginMessage" class="small" aria-live="polite"></div>
-      </form>
-    </section>
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, apikey, content-type, x-aniquiz-sync-key",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+};
 
-    <section id="appView" class="hidden">
-      <div class="row" style="justify-content:flex-end"><button id="refresh" class="fit">Odśwież</button></div>
-      <div id="message" class="hidden" style="margin:14px 0" aria-live="polite"></div>
-      <div class="stats"><div class="stat"><strong id="countConcerts">0</strong><span>koncertów</span></div><div class="stat"><strong id="countPlayers">0</strong><span>graczy</span></div><div class="stat"><strong id="countTracks">0</strong><span>utworów</span></div></div>
-      <nav class="tabs" aria-label="Sekcje"><button class="active" data-tab="concerts">Koncerty</button><button data-tab="tracks">Utwory</button><button data-tab="attendance">Dodaj swoją obecność</button><button data-tab="requests">Zgłoszenia</button><button data-tab="admin" id="adminTab" class="hidden">Panel admina</button></nav>
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, "Content-Type": "application/json; charset=utf-8" },
+  });
 
-      <section id="concertsTab" class="tabPanel">
-        <div class="toolbar"><input id="concertSearch" placeholder="Szukaj artysty, miasta, wydarzenia lub gracza…" aria-label="Szukaj koncertów"></div>
-        <div id="concertList" class="grid"></div>
-      </section>
-      <section id="tracksTab" class="tabPanel hidden">
-        <div class="toolbar"><input id="trackSearch" placeholder="Szukaj utworu, wykonawcy lub anime…" aria-label="Szukaj utworów"></div>
-        <div id="trackList" class="grid"></div>
-      </section>
-      <section id="attendanceTab" class="tabPanel hidden">
-        <div class="card"><h2>Dodaj obecność na koncercie</h2><p class="muted">Wybierz swój profil i koncert, a potem potwierdź PIN-em. Utwory z setlisty dostaną bilet koncertowy.</p>
-          <form id="attendanceForm" class="formgrid">
-            <label>Twój profil<select id="attendancePlayer" required></select></label>
-            <label>Koncert<select id="attendanceConcert" required></select></label>
-            <label class="wide">PIN profilu<input id="attendancePin" type="password" inputmode="numeric" autocomplete="off" minlength="6" required></label>
-            <div class="wide"><button class="primary" type="submit">Potwierdź obecność</button></div>
-          </form>
-        </div>
-      </section>
-      <section id="requestsTab" class="tabPanel hidden">
-        <div class="card"><h2>♥ Zgłoś utwór lub poprawkę</h2><p class="muted">Wskaż utwór z katalogu albo opisz brakujący utwór. Zgłoszenie trafi do administratora.</p>
-          <form id="requestForm" class="formgrid">
-            <label>Rodzaj zgłoszenia<select id="requestType"><option value="track_missing">Dodaj brakujący utwór</option><option value="track_correction">Popraw dane utworu</option><option value="concert_missing">Zgłoś brakujący koncert</option><option value="concert_correction">Popraw dane koncertu</option><option value="setlist_missing">Dodaj utwór do setlisty</option><option value="setlist_correction">Popraw setlistę</option></select></label>
-            <label>Twój nick<input id="requesterName" maxlength="120" placeholder="Nick z bazy AniQuiz"></label>
-            <label id="requestTrackWrap" class="wide hidden">Wybierz utwór z katalogu<input id="requestTrack" list="requestTrackOptions" placeholder="Zacznij pisać tytuł, wykonawcę lub anime…" autocomplete="off"><datalist id="requestTrackOptions"></datalist><span class="small muted">Wpisz kilka liter i wybierz pasujący wynik. Przy poprawce wymagany jest wybór z listy.</span></label>
-            <label id="requestAnimeWrap" class="hidden">Anime<input id="requestAnime" maxlength="240" placeholder="Nazwa anime / serii"></label>
-            <label id="requestSongWrap" class="hidden">Utwór, którego brakuje<input id="requestSong" maxlength="240" placeholder="Tytuł utworu"></label>
-            <label id="requestArtistWrap" class="hidden">Wykonawca, jeśli znasz<input id="requestArtist" maxlength="240" placeholder="Nazwa wykonawcy"></label>
-            <label id="requestSubjectWrap" class="wide">Temat<input id="requestSubject" maxlength="240" placeholder="Np. Ado — brak koncertu w Brukseli 2025"></label>
-            <label id="requestDetailsWrap" class="wide">Co należy dodać lub poprawić?<textarea id="requestDetails" maxlength="5000" placeholder="Opisz poprawne dane, link do źródła lub kontekst zgłoszenia"></textarea></label>
-            <div class="wide"><button class="primary" type="submit">Wyślij zgłoszenie</button></div>
-          </form>
-        </div>
-      </section>
-      <section id="adminTabPanel" class="tabPanel hidden">
-        <div class="grid">
-          <div class="card"><h2>Wczytaj dane z lokalnego quizu</h2><p class="muted">W lokalnej aplikacji otwórz zakładkę Koncerty i oznaczenia, wybierz „Eksportuj bazę online”, a pobrany plik JSON wczytaj tutaj. Import dopisuje i aktualizuje wpisy; nie usuwa danych już obecnych w bazie online.</p>
-            <form id="syncForm" class="stack"><label>Eksport AniQuiz JSON<input id="syncFile" type="file" accept="application/json,.json" required></label><button class="primary" type="submit">Importuj dane do bazy online</button><div id="syncMessage" class="small" aria-live="polite"></div></form>
-          </div>
-          <div class="card"><h2>PIN-y graczy</h2><p class="muted">PIN-u nie da się odczytać — przechowywany jest wyłącznie jego bezpieczny skrót. Możesz wygenerować różne, losowe kody dla wszystkich graczy i pobrać listę do przekazania.</p><div class="notice error small"><strong>Uwaga:</strong> generowanie zmieni PIN każdemu graczowi, także tym, którzy już go mają. Plik pokaże kody tylko raz — pobierz go i przechowuj bezpiecznie.</div><button id="generateAllPins" class="primary" style="margin:12px 0">Wygeneruj PIN-y wszystkim graczom</button><div id="pinBatchResult" class="hidden" style="margin-bottom:16px"></div><div id="pinStatuses" class="small muted">Wczytywanie listy PIN-ów…</div><button id="refreshPinStatus" style="margin:8px 0 14px">Odśwież statusy PIN-ów</button><h3 style="font-size:15px">Ustaw lub zresetuj pojedynczy PIN</h3><p class="small muted">Przekaż go graczowi prywatnie. Nie umieszczaj PIN-ów na GitHubie.</p>
-            <form id="pinForm" class="stack"><label>Gracz<select id="pinPlayer" required></select></label><label>Nowy PIN<input id="newPin" type="password" minlength="6" maxlength="32" required></label><button class="primary" type="submit">Zapisz PIN</button></form>
-          </div>
-          <div class="card"><div class="row"><div><h2>Zgłoszenia</h2><p class="muted">Oczekujące prośby społeczności.</p></div><button id="loadRequests" class="fit">Odśwież</button></div><div id="adminRequests"></div></div>
-        </div>
-      </section>
-    </section>
-  </main>
+const encoder = new TextEncoder();
+const loginAttempts = new Map<string, { count: number; resetAt: number }>();
+const pinLoginAttempts = new Map<string, { count: number; resetAt: number }>();
+const toBase64Url = (bytes: Uint8Array) =>
+  btoa(String.fromCharCode(...bytes)).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/u, "");
+const fromBase64Url = (value: string) => {
+  const base64 = value.replaceAll("-", "+").replaceAll("_", "/");
+  const raw = atob(base64 + "=".repeat((4 - base64.length % 4) % 4));
+  return Uint8Array.from(raw, (char) => char.charCodeAt(0));
+};
 
-  <script>
-    // Public client configuration. The publishable key is intended for browser use;
-    // never place a Supabase Secret/service-role key in this file.
-    const API_BASE = "https://ywcckuiukerosgtsiwsr.supabase.co/functions/v1/aniquiz-api";
-    const PUBLISHABLE_KEY = "sb_publishable_PCUAZcxHG8eX8R8VlEob3Q_DzAFystB";
-    const $ = (id) => document.getElementById(id);
-    const state = { token: sessionStorage.getItem("aniquiz_token"), role: sessionStorage.getItem("aniquiz_role"), data: null };
-    const esc = (value) => String(value ?? "").replace(/[&<>"']/gu, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-    function message(text, kind="good", target="message") { const el=$(target); el.className=`notice ${kind}`; el.textContent=text; el.classList.remove("hidden"); }
-    async function api(action, payload={}, authenticated=true) {
-      if (PUBLISHABLE_KEY.includes("PASTE_")) throw new Error("Brak klucza Publishable w index.html. Skopiuj wartość z działającej, poprzedniej wersji pliku.");
-      const headers={"Content-Type":"application/json","apikey":PUBLISHABLE_KEY};
-      if(authenticated && state.token) headers.Authorization=`Bearer ${state.token}`;
-      let response;try{response=await fetch(API_BASE,{method:"POST",headers,body:JSON.stringify({action,...payload})});}catch{throw new Error("Nie udało się połączyć z API. Sprawdź adres API, DNS i połączenie z Supabase.");}
-      let body={}; try{body=await response.json()}catch{}
-      if(!response.ok){if(body.error==="Nieprawidłowy klucz projektu.")throw new Error("Klucz Publishable w index.html nie zgadza się z ANIQUIZ_PUBLIC_KEY w sekretach Edge Function.");if(body.error==="Login is not configured.")throw new Error("Brak ANIQUIZ_ADMIN_PASSWORD lub ANIQUIZ_VIEWER_PASSWORD w sekretach Edge Function.");if(response.status===429)throw new Error("Za dużo prób logowania. Odczekaj 15 minut i spróbuj ponownie.");throw new Error(body.error || `Błąd API (${response.status})`);}
-      return body;
+async function hmacKey(secret: string) {
+  return await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign", "verify"],
+  );
+}
+
+async function issueToken(role: "viewer" | "admin" | "player", playerId?: number) {
+  const secret = Deno.env.get("ANIQUIZ_TOKEN_SECRET");
+  if (!secret || secret.length < 32) throw new Error("ANIQUIZ_TOKEN_SECRET must be at least 32 characters");
+  const header = toBase64Url(encoder.encode(JSON.stringify({ alg: "HS256", typ: "JWT" })));
+  const lifetime = role === "player" ? 60 * 60 * 24 * 30 : 60 * 60 * 12;
+  const payload = toBase64Url(encoder.encode(JSON.stringify({ role, ...(role === "player" ? { player_id: playerId } : {}), exp: Math.floor(Date.now() / 1000) + lifetime })));
+  const body = `${header}.${payload}`;
+  const signature = new Uint8Array(await crypto.subtle.sign("HMAC", await hmacKey(secret), encoder.encode(body)));
+  return `${body}.${toBase64Url(signature)}`;
+}
+
+async function getRole(request: Request): Promise<"viewer" | "admin" | "player" | null> {
+  const token = request.headers.get("authorization")?.replace(/^Bearer\s+/iu, "");
+  if (!token) return null;
+  const parts = token.split(".");
+  if (parts.length !== 3) return null;
+  const secret = Deno.env.get("ANIQUIZ_TOKEN_SECRET");
+  if (!secret) return null;
+  try {
+    const signed = `${parts[0]}.${parts[1]}`;
+    const ok = await crypto.subtle.verify("HMAC", await hmacKey(secret), fromBase64Url(parts[2]), encoder.encode(signed));
+    if (!ok) return null;
+    const payload = JSON.parse(new TextDecoder().decode(fromBase64Url(parts[1])));
+    if (payload.exp <= Math.floor(Date.now() / 1000)) return null;
+    return payload.role === "admin" || payload.role === "viewer" || (payload.role === "player" && Number.isSafeInteger(payload.player_id)) ? payload.role : null;
+  } catch {
+    return null;
+  }
+}
+
+function getPlayerId(request: Request) {
+  const token = request.headers.get("authorization")?.replace(/^Bearer\s+/iu, "");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(new TextDecoder().decode(fromBase64Url(token.split(".")[1] ?? "")));
+    return Number.isSafeInteger(payload.player_id) ? Number(payload.player_id) : null;
+  } catch { return null; }
+}
+
+function constantTimeEqual(left: string, right: string) {
+  const a = encoder.encode(left);
+  const b = encoder.encode(right);
+  let diff = a.length ^ b.length;
+  const size = Math.max(a.length, b.length);
+  for (let i = 0; i < size; i++) diff |= (a[i] ?? 0) ^ (b[i] ?? 0);
+  return diff === 0;
+}
+
+async function hashPlayerPin(pin: string) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const key = await crypto.subtle.importKey("raw", encoder.encode(pin), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt, iterations: 210_000, hash: "SHA-256" }, key, 256,
+  ));
+  return `pbkdf2_sha256$210000$${toBase64Url(salt)}$${toBase64Url(bits)}`;
+}
+
+async function verifyPlayerPin(pin: string, stored: string) {
+  const [algorithm, iterationText, saltText, hashText] = stored.split("$");
+  const iterations = Number(iterationText);
+  if (algorithm !== "pbkdf2_sha256" || !Number.isInteger(iterations) || iterations < 100_000 || iterations > 1_000_000 || !saltText || !hashText) return false;
+  const key = await crypto.subtle.importKey("raw", encoder.encode(pin), "PBKDF2", false, ["deriveBits"]);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits(
+    { name: "PBKDF2", salt: fromBase64Url(saltText), iterations, hash: "SHA-256" }, key, 256,
+  ));
+  return constantTimeEqual(toBase64Url(bits), hashText);
+}
+
+async function db(path: string, init: RequestInit = {}) {
+  const url = Deno.env.get("SUPABASE_URL");
+  // Supabase injects this privileged key into the Edge Function runtime.
+  // It must remain server-side and must never be returned to the browser.
+  const key = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+  if (!url || !key) throw new Error("Missing Supabase Edge Function runtime credentials");
+  const response = await fetch(`${url}/rest/v1/${path}`, {
+    ...init,
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      Prefer: "return=representation",
+      ...init.headers,
+    },
+  });
+  const text = await response.text();
+  if (!response.ok) throw new Error(`Database request failed (${response.status}): ${text.slice(0, 400)}`);
+  return text ? JSON.parse(text) : null;
+}
+
+async function dbPaged(path: string, maximum: number, pageSize = 1000) {
+  const rows: Record<string, unknown>[] = [];
+  for (let start = 0; start < maximum; start += pageSize) {
+    const limit = Math.min(pageSize, maximum - start);
+    const page = await db(`${path}&limit=${limit}&offset=${start}`);
+    if (!Array.isArray(page)) throw new Error("Supabase zwrócił nieprawidłową stronę danych.");
+    rows.push(...(page as Record<string, unknown>[]));
+    if (page.length < limit) return rows;
+  }
+  // Do not silently tell the portal that a capped result is the full catalogue.
+  const extra = await db(`${path}&limit=1&offset=${maximum}`);
+  if (Array.isArray(extra) && extra.length) throw new Error(`Tabela przekracza limit synchronizacji ${maximum} rekordów.`);
+  return rows;
+}
+
+async function upsertRows(table: string, conflict: string, rows: unknown[]) {
+  const batchSize = 200;
+  for (let start = 0; start < rows.length; start += batchSize) {
+    await db(`${table}?on_conflict=${encodeURIComponent(conflict)}`, {
+      method: "POST",
+      headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+      body: JSON.stringify(rows.slice(start, start + batchSize)),
+    });
+  }
+}
+
+function rowsFromSnapshot(value: unknown, name: string, maximum: number): Record<string, unknown>[] {
+  if (!Array.isArray(value) || value.length > maximum) throw new Error(`Nieprawidłowa lista ${name}.`);
+  if (!value.every((row) => row && typeof row === "object" && !Array.isArray(row))) {
+    throw new Error(`Nieprawidłowy wpis na liście ${name}.`);
+  }
+  return value as Record<string, unknown>[];
+}
+
+const requestTypes = new Set([
+  "track_missing", "track_correction", "concert_missing", "concert_correction",
+  "setlist_missing", "setlist_correction", "attendance",
+]);
+
+Deno.serve(async (request) => {
+  if (request.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (request.method === "GET" && new URL(request.url).pathname.endsWith("/health")) {
+    return json({ ok: true, service: "aniquiz-api" });
+  }
+  if (request.method !== "POST") return json({ error: "Use POST for API actions." }, 405);
+
+  // Supabase's publishable key is intentionally public; it identifies this project's client,
+  // while all database access below uses the server-only ANIQUIZ_DB_SECRET.
+  const suppliedPublicKey = request.headers.get("apikey") ?? "";
+  const expectedPublicKey = Deno.env.get("ANIQUIZ_PUBLIC_KEY") ?? "";
+  if (!expectedPublicKey || !constantTimeEqual(suppliedPublicKey, expectedPublicKey)) {
+    return json({ error: "Nieprawidłowy klucz projektu." }, 401);
+  }
+
+  let body: Record<string, unknown>;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "Invalid JSON body." }, 400);
+  }
+
+  try {
+    if (body.action === "login") {
+      const password = typeof body.password === "string" ? body.password : "";
+      const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+      const now = Date.now();
+      const attempt = loginAttempts.get(clientIp);
+      if (attempt && attempt.resetAt > now && attempt.count >= 8) {
+        return json({ error: "Za dużo prób logowania. Spróbuj ponownie za 15 minut." }, 429);
+      }
+      const viewerPassword = Deno.env.get("ANIQUIZ_VIEWER_PASSWORD") ?? "";
+      const adminPassword = Deno.env.get("ANIQUIZ_ADMIN_PASSWORD") ?? "";
+      if (password.length < 1 || (!viewerPassword && !adminPassword)) return json({ error: "Login is not configured." }, 503);
+      const role = adminPassword && constantTimeEqual(password, adminPassword)
+        ? "admin"
+        : viewerPassword && constantTimeEqual(password, viewerPassword)
+        ? "viewer"
+        : null;
+      if (!role) {
+        const next = attempt && attempt.resetAt > now ? { count: attempt.count + 1, resetAt: attempt.resetAt } : { count: 1, resetAt: now + 15 * 60 * 1000 };
+        loginAttempts.set(clientIp, next);
+        return json({ error: "Nieprawidłowe hasło." }, 401);
+      }
+      loginAttempts.delete(clientIp);
+      return json({ token: await issueToken(role), role, expiresIn: 43200 });
     }
-    function showApp(){ $("loginView").classList.add("hidden"); $("appView").classList.remove("hidden"); $("logout").classList.remove("hidden"); $("adminTab").classList.toggle("hidden",state.role!=="admin"); }
-    function signOut(){sessionStorage.removeItem("aniquiz_token");sessionStorage.removeItem("aniquiz_role");state.token=null;state.role=null;state.data=null;$("appView").classList.add("hidden");$("logout").classList.add("hidden");$("loginView").classList.remove("hidden");}
-    async function loadSnapshot(){try{state.data=await api("snapshot");render();}catch(e){if(String(e.message).includes("Sesja wygasła"))signOut();message(e.message,"error");}}
-    function render(){const d=state.data;if(!d)return;$("countConcerts").textContent=d.concerts.length;$("countPlayers").textContent=d.players.length;$("countTracks").textContent=d.tracks.length;fillSelects();renderConcerts();renderTracks();}
-    function fillSelects(){const d=state.data;const playerOpts=d.players.map(p=>`<option value="${esc(p.player_id)}">${esc(p.display_name)}</option>`).join("");const concertOpts=d.concerts.map(c=>`<option value="${esc(c.concert_id)}">${esc(c.artist)} · ${esc(c.event_name)} (${esc(c.event_year)})</option>`).join("");$("attendancePlayer").innerHTML=playerOpts||"<option value=''>Brak graczy w bazie</option>";$("pinPlayer").innerHTML=playerOpts||"<option value=''>Brak graczy w bazie</option>";$("attendanceConcert").innerHTML=concertOpts||"<option value=''>Brak koncertów w bazie</option>";fillTrackOptions();}
-    function trackLabel(t){return [t.song_title_en||t.song_title,t.artist,t.anime_title].filter(Boolean).join(" · ");}
-    function fillTrackOptions(){if(!state.data)return;$("requestTrackOptions").innerHTML=state.data.tracks.map(t=>`<option value="${esc(trackLabel(t))}"></option>`).join("");}
-    function updateRequestFields(){const type=$("requestType").value, missing=type==="track_missing", track=type==="track_correction"||type==="setlist_missing"||type==="setlist_correction";$("requestTrackWrap").classList.toggle("hidden",!track);$("requestAnimeWrap").classList.toggle("hidden",!missing);$("requestSongWrap").classList.toggle("hidden",!missing);$("requestArtistWrap").classList.toggle("hidden",!missing);$("requestSubjectWrap").classList.toggle("hidden",missing||type==="track_correction");$("requestTrack").required=track;$("requestAnime").required=missing;$("requestSong").required=missing;$("requestSubject").required=!missing&&type!=="track_correction";}
-    function renderConcerts(){const d=state.data,q=$("concertSearch").value.trim().toLocaleLowerCase("pl");const names=new Map(d.players.map(p=>[String(p.player_id),p.display_name]));const attByConcert=new Map();for(const a of d.attendance){const list=attByConcert.get(a.concert_id)||[];list.push(names.get(String(a.player_id))||String(a.player_id));attByConcert.set(a.concert_id,list);}const songsByConcert=new Map();for(const s of d.setlist){const list=songsByConcert.get(s.concert_id)||[];list.push(s);songsByConcert.set(s.concert_id,list);}const rows=d.concerts.filter(c=>[c.artist,c.event_name,c.city,c.venue,...(attByConcert.get(c.concert_id)||[])].join(" ").toLocaleLowerCase("pl").includes(q));$("concertList").innerHTML=rows.length?rows.map(c=>{const attendees=attByConcert.get(c.concert_id)||[];const songs=songsByConcert.get(c.concert_id)||[];return `<article class="item"><h3>${esc(c.artist)} · ${esc(c.event_name)}</h3><p class="muted">${esc(c.event_year)}${c.city?` · ${esc(c.city)}`:""}${c.venue?` · ${esc(c.venue)}`:""}</p><p><strong>${attendees.length}</strong> ${attendees.length===1?"gracz":"graczy"} · <strong>${songs.length}</strong> utworów</p><div>${attendees.length?attendees.map(n=>`<span class="chip">${esc(n)}</span>`).join(""):`<span class="muted small">Brak potwierdzonych osób</span>`}</div><details class="section"><summary>Setlista</summary><ol>${songs.map(s=>`<li>${esc(s.song_title)} <span class="muted small">· ${esc(s.artist)}${s.anime_title?` · ${esc(s.anime_title)}`:""}</span></li>`).join("")||"<li class='muted'>Brak pozycji</li>"}</ol></details></article>`}).join(""):`<div class="empty">${d.concerts.length?"Nic nie pasuje do wyszukiwania.":"Baza koncertów jest jeszcze pusta. Po synchronizacji pojawią się tu wydarzenia."}</div>`;}
-    function renderTracks(){const d=state.data,q=$("trackSearch").value.trim().toLocaleLowerCase("pl");const players=new Map(d.players.map(p=>[String(p.player_id),p.display_name]));const rows=d.tracks.filter(t=>[t.song_title,t.song_title_en,t.artist,t.anime_title,t.anime_title_pl].join(" ").toLocaleLowerCase("pl").includes(q));$("trackList").innerHTML=rows.length?rows.slice(0,500).map(t=>{const marks=d.marks.filter(m=>m.track_key===t.track_key);const hearts=marks.filter(m=>m.heart).map(m=>players.get(String(m.player_id))).filter(Boolean);const tickets=marks.filter(m=>m.concert).map(m=>players.get(String(m.player_id))).filter(Boolean);return `<article class="item"><h3>${esc(t.song_title_en||t.song_title)}</h3>${t.song_title_en&&t.song_title_en!==t.song_title?`<p class="muted">${esc(t.song_title)}</p>`:""}<p class="muted">${esc(t.artist||"Nieznany wykonawca")}${t.anime_title?` · ${esc(t.anime_title)}`:""}</p>${t.anime_title_pl?`<p class="small">Polski tytuł: ${esc(t.anime_title_pl)}</p>`:""}<div class="trackMarks"><div class="trackMark"><span class="markIcon heartIcon" aria-hidden="true">♥</span><div class="markText"><strong>Serduszka</strong><span class="markNames">${hearts.length?hearts.map(esc).join(", "):"Brak"}</span></div></div><div class="trackMark"><span class="markIcon ticketIcon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h16v4a2.5 2.5 0 0 0 0 5v3H4v-3a2.5 2.5 0 0 0 0-5V6Z"/><path d="M13 7v2m0 2v2m0 2v2"/></svg></span><div class="markText"><strong>Koncerty</strong><span class="markNames">${tickets.length?tickets.map(esc).join(", "):"Brak"}</span></div></div></div></article>`}).join(""):`<div class="empty">${d.tracks.length?"Nie znaleziono utworów.":"Brak utworów."}</div>`;}
-    document.querySelectorAll(".tabs button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");document.querySelectorAll(".tabPanel").forEach(p=>p.classList.add("hidden"));$(`${btn.dataset.tab}Tab${btn.dataset.tab==="admin"?"Panel":""}`).classList.remove("hidden");if(btn.dataset.tab==="admin"){loadAdminRequests();loadPinStatuses();}}));
-    $("loginForm").addEventListener("submit",async e=>{e.preventDefault();$("loginMessage").textContent="Logowanie…";try{const r=await api("login",{password:$("password").value},false);state.token=r.token;state.role=r.role;sessionStorage.setItem("aniquiz_token",r.token);sessionStorage.setItem("aniquiz_role",r.role);$("password").value="";showApp();await loadSnapshot();}catch(err){$("loginMessage").textContent=err.message;$("loginMessage").className="notice error";}});
-    $("logout").addEventListener("click",signOut);$("refresh").addEventListener("click",loadSnapshot);$("concertSearch").addEventListener("input",renderConcerts);$("trackSearch").addEventListener("input",renderTracks);
-    $("attendanceForm").addEventListener("submit",async e=>{e.preventDefault();try{const r=await api("add_attendance",{player_id:Number($("attendancePlayer").value),concert_id:$("attendanceConcert").value,pin:$("attendancePin").value});$("attendancePin").value="";message(`Obecność zapisana. Dodano bilety do ${r.tickets_added} utworów.`);await loadSnapshot();}catch(err){message(err.message,"error");}});
-    $("requestType").addEventListener("change",updateRequestFields);updateRequestFields();
-    $("requestForm").addEventListener("submit",async e=>{e.preventDefault();try{const type=$("requestType").value, query=$("requestTrack").value.trim(), track=state.data?.tracks.find(t=>trackLabel(t)===query);if(["track_correction","setlist_missing","setlist_correction"].includes(type)&&!track)throw new Error("Wybierz utwór z podpowiedzi katalogu.");const missing=type==="track_missing", subject=missing?`${$("requestSong").value.trim()} — ${$("requestAnime").value.trim()}`:type==="track_correction"?`Poprawka utworu: ${trackLabel(track)}`:$("requestSubject").value.trim();const proposed_data=missing?{song_title:$("requestSong").value.trim(),anime_title:$("requestAnime").value.trim(),artist:$("requestArtist").value.trim()}:track?{track_key:track.track_key,song_title:track.song_title,song_title_en:track.song_title_en,artist:track.artist,anime_title:track.anime_title}:{};await api("request",{request_type:type,requester_name:$("requesterName").value,subject,details:$("requestDetails").value,track_key:track?.track_key??null,proposed_data});$("requestForm").reset();updateRequestFields();message("Zgłoszenie wysłane do administratora.");}catch(err){message(err.message,"error");}});
-    async function loadAdminRequests(){try{const r=await api("admin_requests",{status:"pending"});$("adminRequests").innerHTML=r.requests.length?r.requests.map(x=>`<div class="request"><span class="status">${esc(x.status)}</span><h3>${esc(x.subject)}</h3><div class="muted small">${esc(x.request_type)} · ${esc(x.requester_name||"bez nicku")} · ${new Date(x.created_at).toLocaleString("pl-PL")}</div>${x.details?`<p>${esc(x.details)}</p>`:""}${x.proposed_data&&Object.keys(x.proposed_data).length?`<p class="small"><strong>Zaproponowane dane:</strong> ${esc(Object.entries(x.proposed_data).filter(([k])=>k!=="track_key").map(([k,v])=>`${k}: ${v}`).join(" · "))}</p>`:""}<div class="row"><button data-review="resolved" data-id="${esc(x.request_id)}">Oznacz jako rozwiązane</button><button class="danger" data-review="rejected" data-id="${esc(x.request_id)}">Odrzuć</button></div></div>`).join(""):"<div class='empty'>Brak oczekujących zgłoszeń.</div>";}catch(e){message(e.message,"error");}}
-    $("loadRequests").addEventListener("click",loadAdminRequests);$("adminRequests").addEventListener("click",async e=>{const b=e.target.closest("button[data-review]");if(!b)return;try{await api("review_request",{request_id:b.dataset.id,status:b.dataset.review});await loadAdminRequests();}catch(err){message(err.message,"error");}});
-    async function loadPinStatuses(){try{const r=await api("admin_pin_status");$("pinStatuses").innerHTML=r.players.map(p=>`<div class="pinrow"><span>${esc(p.display_name)}</span><span class="${p.has_pin?"motif":"muted"}">${p.has_pin?"PIN ustawiony":"Brak PIN-u"}</span></div>`).join("")||"Brak graczy.";}catch(e){$("pinStatuses").textContent=e.message;}}
-    $("refreshPinStatus").addEventListener("click",loadPinStatuses);
-    function downloadPinCsv(players){const quote=value=>`"${String(value??"").replaceAll('"','""')}"`;const csv="\uFEFFNick,PIN\r\n"+players.map(p=>`${quote(p.display_name)},${quote(p.pin)}`).join("\r\n");const url=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="AniQuiz-PIN-y-graczy.csv";a.click();URL.revokeObjectURL(url);}
-    $("generateAllPins").addEventListener("click",async()=>{if(!confirm("Wygenerować nowe PIN-y dla wszystkich aktywnych graczy? Zastąpią też dotychczasowe PIN-y."))return;const button=$("generateAllPins");button.disabled=true;button.textContent="Generuję…";try{const r=await api("admin_generate_player_pins");const rows=r.players.map(p=>`<div class="pinrow"><strong>${esc(p.display_name)}</strong><code>${esc(p.pin)}</code></div>`).join("");$("pinBatchResult").innerHTML=`<div class="notice good">Ustawiono ${r.count} nowych PIN-ów. Pobierz listę teraz — kody nie będą później możliwe do odtworzenia.<div style="margin-top:10px"><button id="downloadPins">Pobierz listę CSV</button></div></div><div style="max-height:300px;overflow:auto;margin-top:8px">${rows}</div>`;$("pinBatchResult").classList.remove("hidden");$("downloadPins").addEventListener("click",()=>downloadPinCsv(r.players));await loadPinStatuses();}catch(err){message(err.message,"error");}finally{button.disabled=false;button.textContent="Wygeneruj PIN-y wszystkim graczom";}});
-    $("pinForm").addEventListener("submit",async e=>{e.preventDefault();try{await api("set_player_pin",{player_id:Number($("pinPlayer").value),pin:$("newPin").value});$("newPin").value="";message("PIN zapisany. Przekaż go graczowi prywatnie — później nie będzie można go odczytać.");await loadPinStatuses();}catch(err){message(err.message,"error");}});
-    $("syncForm").addEventListener("submit",async e=>{e.preventDefault();const file=$("syncFile").files[0];if(!file)return;const status=$("syncMessage");status.className="small";status.textContent="Wczytuję eksport…";try{if(file.size>18_000_000)throw new Error("Plik przekracza limit 18 MB.");const snapshot=JSON.parse(await file.text());const result=await api("sync_snapshot",{snapshot});status.className="notice good";status.textContent=`Import zakończony: ${result.counts.players} graczy, ${result.counts.tracks} utworów, ${result.counts.concerts} koncertów, ${result.counts.setlist} pozycji setlist i ${result.counts.marks} oznaczeń.`;$("syncFile").value="";await loadSnapshot();}catch(err){status.className="notice error";status.textContent=err instanceof SyntaxError?"Plik nie jest poprawnym JSON-em.":err.message;}});
-    if(state.token){showApp();loadSnapshot();if(state.role==="admin")loadPinStatuses();}
-  </script>
-</body>
-</html>
+
+    if (body.action === "player_login") {
+      const playerId = Number(body.player_id);
+      const pin = typeof body.pin === "string" ? body.pin : "";
+      if (!Number.isSafeInteger(playerId) || playerId === 0 || pin.length < 1 || pin.length > 32) {
+        return json({ error: "Wybierz profil i wpisz PIN." }, 400);
+      }
+      const clientIp = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+      const attemptKey = `${clientIp}:${playerId}`;
+      const now = Date.now();
+      const attempt = pinLoginAttempts.get(attemptKey);
+      if (attempt && attempt.resetAt > now && attempt.count >= 8) {
+        return json({ error: "Za dużo prób logowania PIN-em. Spróbuj ponownie za 15 minut." }, 429);
+      }
+      const pinRows = await db(`aniquiz_player_pins?select=pin_hash,failed_attempts,locked_until&player_id=eq.${playerId}&limit=1`);
+      const pinRow = pinRows?.[0];
+      if (!pinRow) return json({ error: "Ten profil nie ma jeszcze PIN-u. Poproś administratora o wygenerowanie PIN-ów." }, 403);
+      if (pinRow.locked_until && new Date(pinRow.locked_until).getTime() > now) {
+        return json({ error: "PIN jest czasowo zablokowany po nieudanych próbach. Spróbuj później." }, 423);
+      }
+      const correctPin = await verifyPlayerPin(pin, pinRow.pin_hash);
+      if (!correctPin) {
+        const failedAttempts = Number(pinRow.failed_attempts ?? 0) + 1;
+        const lockedUntil = failedAttempts >= 6 ? new Date(now + 15 * 60 * 1000).toISOString() : null;
+        await db(`aniquiz_player_pins?player_id=eq.${playerId}`, { method: "PATCH", body: JSON.stringify({ failed_attempts: Math.min(failedAttempts, 20), locked_until: lockedUntil }) });
+        const next = attempt && attempt.resetAt > now ? { count: attempt.count + 1, resetAt: attempt.resetAt } : { count: 1, resetAt: now + 15 * 60 * 1000 };
+        pinLoginAttempts.set(attemptKey, next);
+        return json({ error: "Nieprawidłowy PIN." }, 401);
+      }
+      const players = await db(`aniquiz_players?select=player_id,display_name&player_id=eq.${playerId}&deleted_at=is.null&limit=1`);
+      if (!players?.length) return json({ error: "Nie znaleziono aktywnego profilu." }, 404);
+      pinLoginAttempts.delete(attemptKey);
+      await db(`aniquiz_player_pins?player_id=eq.${playerId}`, { method: "PATCH", body: JSON.stringify({ failed_attempts: 0, locked_until: null, last_used_at: new Date().toISOString() }) });
+      return json({ token: await issueToken("player", playerId), role: "player", player_id: playerId, display_name: players[0].display_name, expiresIn: 2592000 });
+    }
+
+    const role = await getRole(request);
+    const expectedSyncSecret = Deno.env.get("ANIQUIZ_SYNC_SECRET") ?? "";
+    const suppliedSyncSecret = request.headers.get("x-aniquiz-sync-key") ?? "";
+    const syncAuthorized = expectedSyncSecret.length >= 32 && constantTimeEqual(suppliedSyncSecret, expectedSyncSecret);
+    const syncAction = body.action === "sync_snapshot" || body.action === "sync_marks";
+    if (!role && !(syncAction && syncAuthorized)) return json({ error: "Sesja wygasła. Zaloguj się ponownie." }, 401);
+
+    if (body.action === "sync_marks") {
+      if (!syncAuthorized) return json({ error: "Brak uprawnień do synchronizacji AniQuiz." }, 403);
+      const marks = rowsFromSnapshot(body.marks, "oznaczeń", 1000);
+      const now = new Date().toISOString();
+      const updates = marks.map((row) => {
+        const playerId = Number(row.player_id);
+        const trackKey = typeof row.track_key === "string" ? row.track_key : "";
+        if (!Number.isSafeInteger(playerId) || playerId === 0 || !/^[0-9a-f]{32}$/u.test(trackKey) ||
+            typeof row.heart !== "boolean" || typeof row.concert !== "boolean") throw new Error("Nieprawidłowe oznaczenie AniQuiz.");
+        return { player_id: playerId, track_key: trackKey, heart: row.heart, concert: row.concert,
+          updated_at: now, deleted_at: row.deleted_at ? now : null };
+      });
+      await upsertRows("aniquiz_marks", "player_id,track_key", updates);
+      return json({ ok: true, updated: updates.length });
+    }
+
+    if (body.action === "sync_snapshot") {
+      if (role !== "admin" && !syncAuthorized) return json({ error: "Wymagane konto administratora lub skonfigurowana synchronizacja." }, 403);
+      if (encoder.encode(JSON.stringify(body.snapshot ?? {})).byteLength > 18_000_000) {
+        return json({ error: "Eksport przekracza limit 18 MB." }, 413);
+      }
+      const snapshot = body.snapshot && typeof body.snapshot === "object" && !Array.isArray(body.snapshot)
+        ? body.snapshot as Record<string, unknown>
+        : {};
+      if (snapshot.version !== 1) return json({ error: "Nieobsługiwana wersja eksportu." }, 400);
+      const players = rowsFromSnapshot(snapshot.players, "graczy", 5000);
+      const tracks = rowsFromSnapshot(snapshot.tracks, "utworów", 25000);
+      const concerts = rowsFromSnapshot(snapshot.concerts, "koncertów", 10000);
+      const setlist = rowsFromSnapshot(snapshot.setlist, "setlist", 100000);
+      const attendance = rowsFromSnapshot(snapshot.attendance, "obecności", 100000);
+      const marks = rowsFromSnapshot(snapshot.marks, "oznaczeń", 100000);
+      const now = new Date().toISOString();
+      const withSyncTime = (rows: Record<string, unknown>[]) => rows.map((row) => ({ ...row, updated_at: now, deleted_at: null }));
+
+      // Merge into the online catalogue. The importer never deletes rows, so data
+      // added by people in the portal stays safe when a local export is uploaded.
+      await upsertRows("aniquiz_players", "player_id", withSyncTime(players));
+      await upsertRows("aniquiz_tracks", "track_key", withSyncTime(tracks));
+      await upsertRows("aniquiz_concerts", "concert_id", withSyncTime(concerts));
+      await upsertRows("aniquiz_concert_setlist", "concert_id,sort_order", withSyncTime(setlist));
+      await upsertRows("aniquiz_concert_attendance", "concert_id,player_id", withSyncTime(attendance));
+      await upsertRows("aniquiz_marks", "player_id,track_key", withSyncTime(marks));
+      return json({ ok: true, counts: { players: players.length, tracks: tracks.length, concerts: concerts.length,
+        setlist: setlist.length, attendance: attendance.length, marks: marks.length } });
+    }
+
+    if (body.action === "snapshot") {
+      const [players, tracks, concerts, setlist, attendance, marks] = await Promise.all([
+        dbPaged("aniquiz_players?select=player_id,provider,display_name,avatar_url,source_username&deleted_at=is.null&order=display_name.asc,player_id.asc", 5000),
+        dbPaged("aniquiz_tracks?select=track_key,track_number,song_title,song_title_en,artist,anime_title,anime_title_pl,anilist_id&deleted_at=is.null&order=song_title.asc,track_key.asc", 25000),
+        dbPaged("aniquiz_concerts?select=concert_id,artist,event_name,event_year,city,venue,location_details&deleted_at=is.null&order=event_year.desc,concert_id.asc", 10000),
+        dbPaged("aniquiz_concert_setlist?select=concert_id,sort_order,track_key,song_title,artist,anime_title,anilist_id,anime_slug,theme,track_number&deleted_at=is.null&order=concert_id.asc,sort_order.asc", 100000),
+        dbPaged("aniquiz_concert_attendance?select=concert_id,player_id&deleted_at=is.null&order=concert_id.asc,player_id.asc", 100000),
+        dbPaged("aniquiz_marks?select=player_id,track_key,heart,concert&deleted_at=is.null&order=player_id.asc,track_key.asc", 100000),
+      ]);
+      return json({ players, tracks, concerts, setlist, attendance, marks });
+    }
+
+    if (body.action === "player_me") {
+      if (role !== "player") return json({ error: "Zaloguj profil PIN-em." }, 403);
+      const playerId = getPlayerId(request);
+      const players = playerId === null ? [] : await db(`aniquiz_players?select=player_id,display_name&player_id=eq.${playerId}&deleted_at=is.null&limit=1`);
+      if (!players?.length) return json({ error: "Nie znaleziono aktywnego profilu." }, 404);
+      return json({ player: players[0] });
+    }
+
+    if (body.action === "set_my_heart") {
+      if (role !== "player") return json({ error: "Zaloguj profil PIN-em." }, 403);
+      const playerId = getPlayerId(request);
+      const trackKey = typeof body.track_key === "string" ? body.track_key : "";
+      const heart = body.heart;
+      if (playerId === null || !/^[0-9a-f]{32}$/u.test(trackKey) || typeof heart !== "boolean") {
+        return json({ error: "Nieprawidłowy utwór lub stan serduszka." }, 400);
+      }
+      const tracks = await db(`aniquiz_tracks?select=track_key&track_key=eq.${trackKey}&deleted_at=is.null&limit=1`);
+      if (!tracks?.length) return json({ error: "Nie znaleziono aktywnego utworu." }, 404);
+      const current = await db(`aniquiz_marks?select=concert&player_id=eq.${playerId}&track_key=eq.${trackKey}&limit=1`);
+      const row = { player_id: playerId, track_key: trackKey, heart, concert: Boolean(current?.[0]?.concert), updated_at: new Date().toISOString(), deleted_at: null };
+      await db("aniquiz_marks?on_conflict=player_id,track_key", { method: "POST", headers: { Prefer: "resolution=merge-duplicates,return=minimal" }, body: JSON.stringify(row) });
+      return json({ ok: true, mark: row });
+    }
+
+    if (body.action === "request") {
+      const type = typeof body.request_type === "string" ? body.request_type : "";
+      const subject = typeof body.subject === "string" ? body.subject.trim() : "";
+      const details = typeof body.details === "string" ? body.details.trim() : "";
+      if (!requestTypes.has(type) || !subject || subject.length > 240 || details.length > 5000) {
+        return json({ error: "Sprawdź typ, temat i długość opisu zgłoszenia." }, 400);
+      }
+      const proposedData = body.proposed_data && typeof body.proposed_data === "object" ? body.proposed_data : {};
+      const rows = await db("aniquiz_requests", {
+        method: "POST",
+        body: JSON.stringify({
+          request_type: type,
+          requester_name: typeof body.requester_name === "string" ? body.requester_name.slice(0, 120) : "",
+          player_id: typeof body.player_id === "number" ? body.player_id : null,
+          track_key: typeof body.track_key === "string" ? body.track_key : null,
+          concert_id: typeof body.concert_id === "string" ? body.concert_id : null,
+          subject,
+          details,
+          proposed_data: proposedData,
+        }),
+      });
+      return json({ ok: true, request: rows?.[0] ?? null }, 201);
+    }
+
+    if (body.action === "admin_requests") {
+      if (role !== "admin") return json({ error: "Wymagane konto administratora." }, 403);
+      const status = typeof body.status === "string" ? body.status : "pending";
+      const rows = await db(`aniquiz_requests?select=*&status=eq.${encodeURIComponent(status)}&order=created_at.desc&limit=500`);
+      return json({ requests: rows });
+    }
+
+    if (body.action === "admin_pin_status") {
+      if (role !== "admin") return json({ error: "Wymagane konto administratora." }, 403);
+      // Never expose PIN hashes or PIN values. The admin only needs to know
+      // whether a player has a PIN so they can issue a reset when requested.
+      const rows = await db("aniquiz_player_pins?select=player_id&limit=10000");
+      const configured = new Set((rows ?? []).map((row: { player_id: number }) => Number(row.player_id)));
+      const players = await dbPaged("aniquiz_players?select=player_id,display_name&deleted_at=is.null&order=display_name.asc", 10000);
+      return json({ players: players.map((player) => ({
+        player_id: player.player_id,
+        display_name: player.display_name,
+        has_pin: configured.has(Number(player.player_id)),
+      })) });
+    }
+
+    if (body.action === "admin_generate_player_pins") {
+      if (role !== "admin") return json({ error: "Wymagane konto administratora." }, 403);
+      // This intentionally rotates all active PINs. Plaintext values are only
+      // returned in this admin response so they can be distributed once.
+      const players = await dbPaged("aniquiz_players?select=player_id,display_name&deleted_at=is.null&order=display_name.asc", 100);
+      if (!players.length) return json({ error: "Nie znaleziono aktywnych graczy." }, 404);
+      const used = new Set<string>();
+      const issued = players.map((player) => {
+        let pin = "";
+        do {
+          const random = crypto.getRandomValues(new Uint32Array(1))[0] % 100_000_000;
+          pin = String(random).padStart(8, "0");
+        } while (used.has(pin));
+        used.add(pin);
+        return { player_id: Number(player.player_id), display_name: String(player.display_name ?? ""), pin };
+      });
+      const rows = await Promise.all(issued.map(async (player) => ({
+        player_id: player.player_id,
+        pin_hash: await hashPlayerPin(player.pin),
+        failed_attempts: 0,
+        locked_until: null,
+        updated_at: new Date().toISOString(),
+      })));
+      await upsertRows("aniquiz_player_pins", "player_id", rows);
+      return json({ ok: true, count: issued.length, players: issued });
+    }
+
+    if (body.action === "set_player_pin") {
+      if (role !== "admin") return json({ error: "Wymagane konto administratora." }, 403);
+      const playerId = Number(body.player_id);
+      const pin = typeof body.pin === "string" ? body.pin : "";
+      if (!Number.isInteger(playerId) || playerId === 0 || pin.length < 6 || pin.length > 32) {
+        return json({ error: "PIN musi mieć od 6 do 32 znaków, a gracz musi mieć prawidłowy identyfikator." }, 400);
+      }
+      const player = await db(`aniquiz_players?select=player_id&player_id=eq.${playerId}&deleted_at=is.null&limit=1`);
+      if (!player?.length) return json({ error: "Nie znaleziono aktywnego gracza." }, 404);
+      const pinHash = await hashPlayerPin(pin);
+      await db("aniquiz_player_pins?on_conflict=player_id", {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=representation" },
+        body: JSON.stringify({ player_id: playerId, pin_hash: pinHash, failed_attempts: 0, locked_until: null, updated_at: new Date().toISOString() }),
+      });
+      return json({ ok: true });
+    }
+
+    if (body.action === "add_attendance") {
+      const playerId = Number(body.player_id);
+      const concertId = typeof body.concert_id === "string" ? body.concert_id : "";
+      const pin = typeof body.pin === "string" ? body.pin : "";
+      if (!Number.isInteger(playerId) || playerId === 0 || !/^[0-9a-f]{32}$/u.test(concertId) || pin.length < 1) {
+        return json({ error: "Wybierz gracza i koncert, a następnie podaj PIN." }, 400);
+      }
+      const pinRows = await db(`aniquiz_player_pins?select=pin_hash,failed_attempts,locked_until&player_id=eq.${playerId}&limit=1`);
+      const pinRow = pinRows?.[0];
+      if (!pinRow) return json({ error: "Ten gracz nie ma ustawionego PIN-u. Poproś administratora." }, 403);
+      if (pinRow.locked_until && new Date(pinRow.locked_until).getTime() > Date.now()) {
+        return json({ error: "PIN jest czasowo zablokowany po nieudanych próbach. Spróbuj później." }, 423);
+      }
+      const correctPin = await verifyPlayerPin(pin, pinRow.pin_hash);
+      if (!correctPin) {
+        const failedAttempts = Number(pinRow.failed_attempts ?? 0) + 1;
+        const lockedUntil = failedAttempts >= 6 ? new Date(Date.now() + 15 * 60 * 1000).toISOString() : null;
+        await db(`aniquiz_player_pins?player_id=eq.${playerId}`, {
+          method: "PATCH",
+          body: JSON.stringify({ failed_attempts: Math.min(failedAttempts, 20), locked_until: lockedUntil }),
+        });
+        return json({ error: "Nieprawidłowy PIN." }, 401);
+      }
+      await db(`aniquiz_player_pins?player_id=eq.${playerId}`, {
+        method: "PATCH",
+        body: JSON.stringify({ failed_attempts: 0, locked_until: null, last_used_at: new Date().toISOString() }),
+      });
+      const concertRows = await db(`aniquiz_concerts?select=concert_id&concert_id=eq.${concertId}&deleted_at=is.null&limit=1`);
+      if (!concertRows?.length) return json({ error: "Nie znaleziono aktywnego koncertu." }, 404);
+      const setlist = await db(`aniquiz_concert_setlist?select=track_key&concert_id=eq.${concertId}&deleted_at=is.null&limit=1000`);
+      const currentMarks = await db(`aniquiz_marks?select=track_key,heart,concert&player_id=eq.${playerId}&deleted_at=is.null&limit=10000`);
+      const marksByTrack = new Map((currentMarks ?? []).map((mark: { track_key: string }) => [mark.track_key, mark]));
+      const ticketTracks = [...new Set((setlist ?? []).map((item: { track_key: string | null }) => item.track_key).filter((key: string | null): key is string => Boolean(key)))];
+      await db("aniquiz_concert_attendance?on_conflict=concert_id,player_id", {
+        method: "POST",
+        headers: { Prefer: "resolution=merge-duplicates,return=representation" },
+        body: JSON.stringify({ concert_id: concertId, player_id: playerId, updated_at: new Date().toISOString(), deleted_at: null }),
+      });
+      if (ticketTracks.length) {
+        const now = new Date().toISOString();
+        const updates = ticketTracks.map((trackKey) => {
+          const previous = marksByTrack.get(trackKey) as { heart?: boolean } | undefined;
+          return { player_id: playerId, track_key: trackKey, heart: previous?.heart ?? false, concert: true, updated_at: now, deleted_at: null };
+        });
+        await db("aniquiz_marks?on_conflict=player_id,track_key", {
+          method: "POST",
+          headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+          body: JSON.stringify(updates),
+        });
+      }
+      return json({ ok: true, tickets_added: ticketTracks.length });
+    }
+
+    if (body.action === "review_request") {
+      if (role !== "admin") return json({ error: "Wymagane konto administratora." }, 403);
+      const id = typeof body.request_id === "string" ? body.request_id : "";
+      const status = body.status;
+      if (!id || !["approved", "rejected", "resolved"].includes(String(status))) return json({ error: "Nieprawidłowe ID lub status zgłoszenia." }, 400);
+      const rows = await db(`aniquiz_requests?request_id=eq.${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          status,
+          admin_note: typeof body.admin_note === "string" ? body.admin_note.slice(0, 3000) : "",
+          reviewed_at: new Date().toISOString(),
+          reviewed_by: "admin",
+        }),
+      });
+      return json({ ok: true, request: rows?.[0] ?? null });
+    }
+
+    return json({ error: "Unknown action." }, 400);
+  } catch (error) {
+    console.error("aniquiz-api error", error);
+    return json({ error: "Błąd API. Sprawdź logi Edge Function." }, 500);
+  }
+});
